@@ -212,7 +212,7 @@ def get_esf() -> num:
 @private
 def get_collective_reward() -> decimal:
     epoch = self.current_epoch
-    live = self.get_esf(epoch) <= 2
+    live = self.get_esf() <= 2
     if not self.deposit_exists() or not live:
         return 0.0
     # Fraction that voted
@@ -253,7 +253,7 @@ def initialize_epoch(epoch: num):
     self.current_epoch = epoch
 
     # Reward if finalized at least in the last two epochs
-    self.last_nonvoter_rescale = (1 + self.get_collective_reward(epoch) - self.reward_factor)
+    self.last_nonvoter_rescale = (1 + self.get_collective_reward() - self.reward_factor)
     self.last_voter_rescale = self.last_nonvoter_rescale * (1 + self.reward_factor)
     self.deposit_scale_factor[epoch] = self.deposit_scale_factor[epoch - 1] * self.last_nonvoter_rescale
 
